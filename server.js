@@ -1,6 +1,6 @@
 var app = require('./server-config.js');
 
-var port = process.env.SHORTLY_PORT;
+var port = process.env.port;
 
 app.listen(port);
 
