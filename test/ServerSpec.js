@@ -13,7 +13,7 @@ var Link = require('../app/models/link');
 
 var User = require('../app/models/user');
 var Link = require('../app/models/link');
-('', function() {
+describe('', function() {
 
   beforeEach(function(done) {
     // Log out currently signed in user
@@ -82,7 +82,7 @@ var Link = require('../app/models/link');
             Link.findOne({'url' : 'http://www.roflzoo.com/'})
               .exec(function(err,link){
                 if(err) console.log(err);
-                expect(link.title).to.equal('Rofl Zoo - Daily funny animal pictures');
+                expect(link.title).to.equal('Funny pictures of animals, funny dog pictures');
               });
           })
           .end(done);
@@ -95,10 +95,12 @@ var Link = require('../app/models/link');
       beforeEach(function(done) {
         link = new Link({
           url: 'http://www.roflzoo.com/',
-          title: 'Rofl Zoo - Daily funny animal pictures',
+          title: 'Funny pictures of animals, funny dog pictures',
           base_url: 'http://127.0.0.1:4568',
           visits: 0
         })
+
+        link.hash();
 
         link.save(function() {
           done();
@@ -114,6 +116,7 @@ var Link = require('../app/models/link');
           .expect(200)
           .expect(function(res) {
             var secondCode = res.body.code;
+            console.log('FIRSTCODE:',firstCode,'SECONDCODE:',secondCode)
             expect(secondCode).to.equal(firstCode);
           })
           .end(done);
@@ -210,12 +213,16 @@ var Link = require('../app/models/link');
   describe('Account Login:', function(){
 
     beforeEach(function(done) {
-      new User({
+      var newUser = new User({
           'username': 'Phillip',
           'password': 'Phillip'
-      }).save(function(){
-        done();
       });
+      newUser.hashPassword()
+        .then( function() {
+          newUser.save(function(){
+            done();
+          });
+        });
     });
 
     it('Logs in existing users', function(done) {
