@@ -111,11 +111,11 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
+    'jshint',
     'mochaTest'
   ]);
 
   grunt.registerTask('build', [
-    'jshint',
     'concat',
     'uglify',
     'cssmin'
@@ -132,7 +132,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
       // add your production server task here
-    // 'test',
+    'test',
     'build',
     'upload'
   ]);

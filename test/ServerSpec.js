@@ -30,7 +30,7 @@ var Link = require('../app/models/link');
       });
   });
 
-  xdescribe('Link creation: ', function() {
+  describe('Link creation: ', function() {
 
     it('Only shortens valid urls, returning a 404 - Not found for invalid urls', function(done) {
       request(app)
@@ -135,7 +135,7 @@ var Link = require('../app/models/link');
 
   }); // 'Link creation'
 
-  xdescribe('Priviledged Access:', function(){
+  describe('Priviledged Access:', function(){
 
     // /*  Authentication  */
     // // TODO: xit out authentication
@@ -171,7 +171,7 @@ var Link = require('../app/models/link');
 
   }); // 'Privileged Access'
 
-  xdescribe('Account Creation:', function(){
+  describe('Account Creation:', function(){
 
     it('Signup creates a new user', function(done) {
       request(app)
@@ -207,7 +207,7 @@ var Link = require('../app/models/link');
 
   }); // 'Account Creation'
 
-  xdescribe('Account Login:', function(){
+  describe('Account Login:', function(){
 
     beforeEach(function(done) {
       new User({
