@@ -1,4 +1,5 @@
-var db = require('../config');
+//var db = require('../config');
+var db = require('../mongoConfig');
 var bcrypt = require('bcrypt-nodejs');
 var Promise = require('bluebird');
 
@@ -22,4 +23,13 @@ var User = db.Model.extend({
   }
 });
 
+var User = db.model('user', db.users);
+
+User.methods.hashPassword = function(){
+  var cipher = Promise.promisify(bcrypt.hash);
+  return cipher(this.get('password'), null, null).bind(this)
+    .then(function(hash) {
+      this.set('password', hash);
+    });
+}
 module.exports = User;
