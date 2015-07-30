@@ -132,7 +132,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
       // add your production server task here
-    'test',
+    // 'test',
     'build',
     'upload'
   ]);
