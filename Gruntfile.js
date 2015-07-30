@@ -15,8 +15,8 @@ module.exports = function(grunt) {
     mochaTest: {
       test: {
         options: {
-          reporter: 'spec'
-        },
+          reporter: 'spec',
+          },
         src: ['test/**/*.js']
       }
     },
@@ -38,9 +38,12 @@ module.exports = function(grunt) {
     jshint: {
       files: [
         // Add filespec list here
+        'public/client/*.js',
+        'Gruntfile.js',
+        'server*.js',
+        'app/**/*.js'
       ],
       options: {
-        force: 'true',
         jshintrc: '.jshintrc',
         ignores: [
           'public/lib/**/*.js',
@@ -76,6 +79,7 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command: 'git push azure master',
       }
     },
   });
@@ -111,6 +115,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
+    'jshint',
     'concat',
     'uglify',
     'cssmin'
@@ -119,6 +124,7 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run([ 'shell' ]);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -126,6 +132,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
       // add your production server task here
+    'test',
+    'build',
+    'upload'
   ]);
 
 
